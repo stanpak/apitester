@@ -29,9 +29,9 @@ export async function testSuite(o, env) {
             await c(env);
             console.info("   ", c, `--> OK`);
         }
-        catch (err) {
+        catch (error) {
             failedCount++;
-            console.error("   ", c, `--> FAILED`);
+            console.error("   ", c, `--> FAILED`, {error});
         }
     }
 

@@ -10,11 +10,14 @@ const simpleTestSuite = {
     getCall: async (env) => {
 
         // Execute the REST call
-        let data = await fetchGet(env.uri + "/users?page=2");
+        let data = await fetchGet({
+            url: env.uri + "/users?page=2",
+            proxy: env.proxy
+        });
 
         // Here we can do some basic checks of the response..
         // console.log({ data });
-        assert.isTrue(data!=null, "The response cannot be null");
+        assert.isTrue(data != null, "The response cannot be null");
         assert.isTrue(false, "No good!");
     },
 
@@ -26,7 +29,11 @@ const simpleTestSuite = {
             name: "morpheus",
             job: "leader"
         };
-        let data = await fetchPost(env.uri + "/users", payload);
+        let data = await fetchPost({
+            url: env.uri + "/users",
+            body: payload,
+            proxy: env.proxy
+        });
 
         // Here we can do some basic checks of the response..
         // console.log({ data });
@@ -36,7 +43,10 @@ const simpleTestSuite = {
     deleteCall: async (env) => {
 
         // Execute the REST call
-        let data = await fetchDelete(env.uri + "/users/2");
+        let data = await fetchDelete({
+            url: env.uri + "/users/2",
+            proxy: env.proxy
+        });
 
         // Here we can do some basic checks of the response..
         // console.log({ data });
