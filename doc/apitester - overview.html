@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>apitester</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# `apitester`
+## The comprehensive and simple REST testing framework
+
+---
+
+# Agenda
+
+1. Introduction - `apitester` features
+2. What we need from our tests?
+2. Comparing with Alternatives
+3. How to write the tests?
+    1. Main function
+    2. Test suite
+    3. Singular Test
+    4. Assertions
+    5. Running the tests
+
+---
+
+# Introduction
+
+* Written in JavaScript and running on NodeJS
+* Very lightweigt and flexible
+* Easy to automate
+* Still under development - not everything is implemented yet
+
+---
+
+# What is expected from test framework?
+
+* **Granularity** of tests
+* **Automated or Manual** execution (automated really)
+* **Ease of Use** (zombie-proof)
+* **Multiple Environments**
+* **Ease of Maintenance**
+* **Consistency with Code** (this is what the tests are meant for)
+
+---
+
+# Requirements for the solution
+
+*   R1: **Free**
+    <!-- Use the solution that does not require paid license (to consider). -->
+
+*   R2: **Easy to setup and configure**
+    <!-- It does not require too much of the configuration work or hassle. -->
+
+*   R3: **Easy to run**
+    <!-- We want to have an unsophisticated method of running select tests or whole use cases or full lines of tests for specific environment. It does not require specialized tools or training to use. -->
+
+*   R4: **Easy to create the test cases**
+    <!-- Ideally, creation of new test cases should be relatively simple. Best if used with some rudimentary editors, IDEs that are already available and approved. -->
+
+*   R5: **Shareable**
+    <!-- It does allow to share the set of requests between the team members as well the testers -->
+
+*   R6: **Versionable**
+    <!-- It allows to keep the request definitions along our code within our code repository, as the requests will be shanging along the changes in the corresponding code. -->
+
+*   R7: **Can be automated**
+    <!-- At some stage we would like to be able to run these calls in batches for routine and automated testing purposes. -->
+
+*   R8: **Parameterizable**
+    <!-- As we usually want to test various environments, we want to have these scripts to use environment-specific variables injected to these requests. -->
+
+---
+
+# Comparison with Alternatives
+
+| Criterion      | NodeJS | JUnit  | curl  | Postman  | ThunderClient  |
+| :---        |    :---   |          :--- |
+|Free| **Y**| **Y**| **Y**| no| no|
+| Easy to setup and configure | **Y** | Somewhat |**Y** | Somewhat | Somewhat|
+|Easy to run| **Y** |**Y**|**Y**|**Y**|**Y**|
+| Easy to create the test cases|**Y**|Somewhat|no|**Y**|
+|Shareable| **Y** |**Y**| **Y**|**Y**|**Y**|
+|Versionable| **Y**| **Y**| **Y**|no|**Y**|
+|Can be automated|**Y**| **Y**| **Y**|???|no|
+|Parameterizable|**Y**|**Y**|**Y**|**Y**| **Y**|
+---
+
+Sample code:
+
+```JavaScript
+const l = "123";
+```
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
