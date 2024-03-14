@@ -6,7 +6,7 @@ import fetch from "node-fetch";
  */
 const options = { headers: { 'Content-Type': 'application/json' } }
 
-async function _fetch({ method, url, body, headers, proxy }) {
+async function _fetch({ method, url, body, text, headers, proxy }) {
     url = encodeURI(url);
 
     let h = {
@@ -15,6 +15,8 @@ async function _fetch({ method, url, body, headers, proxy }) {
     };
 
     let b = body ? JSON.stringify(body) : null;
+    if (text)
+        b = text;
 
     let opt = {
         ...options,
@@ -24,7 +26,7 @@ async function _fetch({ method, url, body, headers, proxy }) {
     };
 
     // Add the web proxy configuration if it is expected...
-    if(proxy){
+    if (proxy) {
         const proxyAgent = new HttpsProxyAgent(proxy.url)
         opt.agent = proxyAgent;
     }
@@ -32,27 +34,27 @@ async function _fetch({ method, url, body, headers, proxy }) {
     let response = await fetch(url, opt);
 
     let data = null;
-    let text = await response.text();
-    text = text.trim();
-    if (text.length !== 0)
-        data = JSON.parse(text);
+    let t = await response.text();
+    t = t.trim();
+    if (t.length !== 0)
+        data = JSON.parse(t);
 
     return data;
 }
 
-export async function fetchPost({ url, body, headers, proxy }) {
-    return await _fetch({ method: "post", url, body, headers, proxy });
+export async function fetchPost(p) {
+    return await _fetch({ method: "post", ...p });
 }
 
-export async function fetchPut(url, body, headers, proxy) {
-    return await _fetch({ method: "put", url, body, headers, proxy });
+export async function fetchPut(p) {
+    return await _fetch({ method: "put", ...p });
 }
 
-export async function fetchGet({ url, headers, proxy }) {
-    return await _fetch({ method: "get", url, body: undefined, headers, proxy });
+export async function fetchGet(p) {
+    return await _fetch({ method: "get", ...p, body: undefined });
 }
 
-export async function fetchDelete({ url, headers, proxy }) {
-    return await _fetch({ method: "delete", url, body: undefined, headers, proxy });
+export async function fetchDelete(p) {
+    return await _fetch({ method: "delete", ...p, body: undefined });
 }
 
