@@ -4,7 +4,7 @@ import * as assert from "../../framework/assert.mjs";
 
 
 // NOTE: This constant corresponds to the test suite class in JUnit
-const simpleTestSuite = {
+export const suite = {
 
     // NOTE: This property corresponds to the singular test method in JUnit
     getCall: async (env) => {
@@ -18,7 +18,8 @@ const simpleTestSuite = {
         // Here we can do some basic checks of the response..
         // console.log({ data });
         assert.isTrue(data != null, "The response cannot be null");
-        assert.isTrue(false, "No good!");
+        assert.isTrue(data.page === 2, "Property 'page' should be 2");
+        // assert.isTrue(data.total === 2, "Property 'total' should be 12");
     },
 
     // NOTE: This property corresponds to the singular test method in JUnit
@@ -49,13 +50,5 @@ const simpleTestSuite = {
         });
 
         // Here we can do some basic checks of the response..
-        // console.log({ data });
-    },
-
-    // Test to see how the exception will be handled.
-    throwsEx: async (env) => {
-        throw "Exception thrown!";
     },
 }
-
-export { simpleTestSuite };

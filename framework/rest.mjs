@@ -2,11 +2,11 @@ import { HttpsProxyAgent } from "https-proxy-agent";
 import fetch from "node-fetch";
 
 /**
- * Default REST headers: using JSON for everything.
- */
+* Default REST headers: using JSON for everything.
+*/
 const options = { headers: { 'Content-Type': 'application/json' } }
 
-async function _fetch({ method, url, body, text, headers, proxy }) {
+async function _fetch({ method, url, body, headers, proxy }) {
     url = encodeURI(url);
 
     let h = {
@@ -15,8 +15,6 @@ async function _fetch({ method, url, body, text, headers, proxy }) {
     };
 
     let b = body ? JSON.stringify(body) : null;
-    if (text)
-        b = text;
 
     let opt = {
         ...options,
@@ -31,30 +29,42 @@ async function _fetch({ method, url, body, text, headers, proxy }) {
         opt.agent = proxyAgent;
     }
 
-    let response = await fetch(url, opt);
-
     let data = null;
-    let t = await response.text();
-    t = t.trim();
-    if (t.length !== 0)
-        data = JSON.parse(t);
+    let response = null;
+    let text = null;
+    response = await fetch(url, opt);
+
+    text = await response.text();
+    text = text.trim();
+    // console.log("Response text: ", text);
+    if (text.length !== 0)
+        try {
+            data = JSON.parse(text);
+        } catch (error) {
+            // We just assume the result is a string
+            data = text;
+        }
+
+    // If the response HTTP status is different than 2xx, then we want to throw this as an exception.
+    if ((response.status < 200 || response.status >= 300) && response.status !== 418)
+        throw data;
 
     return data;
+
 }
 
-export async function fetchPost(p) {
-    return await _fetch({ method: "post", ...p });
+export async function fetchPost({ url, body, headers, proxy }) {
+    return await _fetch({ method: "post", url, body, headers, proxy });
 }
 
-export async function fetchPut(p) {
-    return await _fetch({ method: "put", ...p });
+export async function fetchPut({ url, body, headers, proxy }) {
+    return await _fetch({ method: "put", url, body, headers, proxy });
 }
 
-export async function fetchGet(p) {
-    return await _fetch({ method: "get", ...p, body: undefined });
+export async function fetchGet({ url, headers, proxy }) {
+    return await _fetch({ method: "get", url, body: undefined, headers, proxy });
 }
 
-export async function fetchDelete(p) {
-    return await _fetch({ method: "delete", ...p, body: undefined });
+export async function fetchDelete({ url, body, headers, proxy }) {
+    return await _fetch({ method: "delete", url, body, headers, proxy });
 }
-
